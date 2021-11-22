@@ -40,7 +40,7 @@ export function AppointmentCreate() {
     const [month, setMonth] = useState('');
     const [hour, setHour] = useState('');
     const [minute, setMinute] = useState('');
-    const [desc, setDesc] = useState('');
+    const [description, setDesc] = useState('');
 
     const nav  = useNavigation();
 
@@ -67,7 +67,7 @@ export function AppointmentCreate() {
             guild,
             category,
             date: `${day}/${month} às ${hour}:${minute}h`,
-            desc
+            description
         };
 
         // primeiro pego os agendamentos feitos para nao sobrescrever

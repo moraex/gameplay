@@ -32,6 +32,7 @@ type AuthContextData = {
     user: User;
     loading: boolean;
     signIn: () => Promise<void>;
+    signOut: () => Promise<void>;
 }
 
 type AuthProviderProps = {
@@ -90,10 +91,16 @@ function AuthProvider ({ children } : AuthProviderProps) {
         }
     }
 
+    async function signOut() {
+        setUser({} as User);
+        await AsyncStorage.removeItem(COLLECTION_USERS);
+    }
+
     async function loadUserStorageData() {
         const storage = await AsyncStorage.getItem(COLLECTION_USERS);
         if(storage){
             const userLogged = JSON.parse(storage) as User;
+            // console.log(api.defaults.headers);
             api.defaults.headers.authorization = `Bearer ${userLogged.token}`;
             setUser(userLogged);
         }
@@ -112,7 +119,8 @@ function AuthProvider ({ children } : AuthProviderProps) {
         value={{ 
             user,
             loading,
-            signIn
+            signIn,
+            signOut
          }}>
             { children }
         </AuthContext.Provider>
